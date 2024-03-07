@@ -2,7 +2,7 @@
 <template>
   <div class="card" @click="selectCard">
     <div v-if="visible" class="card-face is-front">
-      {{ value }}
+      {{ value }} - {{ matched }}
     </div>
     <div v-else class="card-face is-back">Back</div>
   </div>
@@ -11,6 +11,10 @@
 <script setup>
 import { defineProps, defineEmits } from "vue";
 const props = defineProps({
+  matched: {
+    type: Boolean,
+    default: false,
+  },
   position: {
     type: Number,
     required: true,
@@ -31,6 +35,7 @@ const selectCard = () => {
   console.log(props.position);
   emit("select-card", {
     position: props.position,
+    faceValue: props.value,
   });
 };
 </script>
