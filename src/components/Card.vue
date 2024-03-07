@@ -1,16 +1,59 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="card">{{ value }}</div>
+  <div class="card" @click="selectCard">
+    <div v-if="visible" class="card-face is-front">
+      {{ value }}
+    </div>
+    <div v-else class="card-face is-back">Back</div>
+  </div>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
-defineProps({
+import { defineProps, defineEmits } from "vue";
+const props = defineProps({
+  position: {
+    type: Number,
+    required: true,
+  },
   value: {
     type: Number,
     required: true,
   },
+  visible: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+const emit = defineEmits(["select-card"]);
+
+const selectCard = () => {
+  console.log(props.position);
+  emit("select-card", {
+    position: props.position,
+  });
+};
 </script>
 
-<style></style>
+<style>
+.card {
+  border: 5px solid #ccc;
+  position: relative;
+}
+
+.card-face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.card-face.is-front {
+  background-color: red;
+  color: white;
+}
+
+.card-face.is-back {
+  background-color: blue;
+  color: white;
+}
+</style>
