@@ -32,7 +32,6 @@ const props = defineProps({
 const emit = defineEmits(["select-card"]);
 
 const selectCard = () => {
-  console.log(props.position);
   emit("select-card", {
     position: props.position,
     faceValue: props.value,
