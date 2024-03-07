@@ -1,6 +1,10 @@
 <template>
   <h1 class="sr-only">Peek-a-Vue</h1>
   <img src="/images/peek-a-vue-title.png" alt="Peek-a-Vue" class="title" />
+  <section class="description">
+    <p>Welcome to Peek-a-Vue!</p>
+    <p>A card matching game powered by Vue.js 3!</p>
+  </section>
   <transition-group tag="section" class="game-board" name="shuffle-card">
     <Card
       v-for="card in cardList"
@@ -12,8 +16,11 @@
       @select-card="flipCard"
     />
   </transition-group>
-  <h2>{{ status }}</h2>
-  <button @click="restartGame()" class="button">
+  <h2 class="status">{{ status }}</h2>
+  <button v-if="newPlayer" @click="startGame()" class="button">
+    <img src="/images/play.svg" alt="Start" />Start Game
+  </button>
+  <button v-else @click="restartGame()" class="button">
     <img src="/images/restart.svg" alt="Restart" />Restart Game
   </button>
 </template>
@@ -26,6 +33,13 @@ import { ref, watch, computed } from "vue";
 
 const cardList = ref([]);
 const userSelection = ref([]);
+const newPlayer = ref(true);
+
+const startGame = () => {
+  newPlayer.value = false;
+
+  restartGame();
+};
 
 const status = computed(() => {
   if (remainingPairs.value === 0) {
@@ -79,7 +93,7 @@ cartItems.forEach((item) => {
   cardList.value.push({
     value: item,
     variant: 2,
-    visible: false,
+    visible: true,
     position: null,
     matched: false,
   });
@@ -172,6 +186,19 @@ h1 {
   justify-content: center;
 }
 
+.description {
+  font-family: "Titillium Web", sans-serif;
+}
+
+.description p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.description p:last-child {
+  margin-bottom: 30px;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -190,12 +217,17 @@ h1 {
 .button {
   background-color: orange;
   color: white;
-  padding: 0.75rem 0.5rem;
+  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
   font-weight: bold;
+  font-family: "Titillium Web", sans-serif;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border: 0;
+  border-radius: 10px;
 }
 
 .button img {
@@ -204,5 +236,9 @@ h1 {
 
 .shuffle-card-move {
   transition: transform 0.8s ease-in;
+}
+
+.status {
+  font-family: "Titillium Web", sans-serif;
 }
 </style>
