@@ -56,14 +56,30 @@ const restartGame = () => {
   });
 };
 
-for (let i = 0; i < 16; i++) {
+const cartItems = [1, 2, 3, 4, 5, 6, 7, 8];
+
+cartItems.forEach((item) => {
   cardList.value.push({
-    value: i,
+    value: item,
     visible: false,
-    position: i,
+    position: null,
     matched: false,
   });
-}
+
+  cardList.value.push({
+    value: item,
+    visible: false,
+    position: null,
+    matched: false,
+  });
+});
+
+cardList.value = cardList.value.map((card, index) => {
+  return {
+    ...card,
+    position: index,
+  };
+});
 
 const flipCard = (payload) => {
   cardList.value[payload.position].visible = true;
