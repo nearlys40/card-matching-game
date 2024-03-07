@@ -20,6 +20,7 @@
 
 <script setup>
 import _ from "lodash";
+import { launchConfetti } from "./utilities/confetti";
 import Card from "@/components/Card.vue";
 import { ref, watch, computed } from "vue";
 
@@ -107,6 +108,12 @@ const flipCard = (payload) => {
     userSelection.value[0] = payload;
   }
 };
+
+watch(remainingPairs, (currentValue) => {
+  if (currentValue === 0) {
+    launchConfetti();
+  }
+});
 
 watch(
   userSelection,
