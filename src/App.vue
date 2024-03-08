@@ -137,8 +137,10 @@ watch(
       const cardTwo = currentValue[1];
 
       if (cardOne.faceValue === cardTwo.faceValue) {
-        cardList.value[cardOne.position].matched = true;
-        cardList.value[cardTwo.position].matched = true;
+        setTimeout(() => {
+          cardList.value[cardOne.position].matched = true;
+          cardList.value[cardTwo.position].matched = true;
+        }, 550);
       } else {
         setTimeout(() => {
           cardList.value[cardOne.position].visible = false;
